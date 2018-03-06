@@ -12,7 +12,7 @@ class BookTest {
 
     @org.junit.jupiter.api.Test
     void add() {
-        newBook.add("Dmitry", "Bely Kuna,5,144");
+        newBook.add("Dmitry", "");
     }
 
     @org.junit.jupiter.api.Test
@@ -29,7 +29,7 @@ class BookTest {
 
     @org.junit.jupiter.api.Test
     void getPeopleByStreet() {
-        assertEquals("Dmitry", newBook.getPeopleByStreet("Bely kuna"));
+        assertEquals("Dmitry", newBook.getPeopleByStreet(""));
     }
 
     @org.junit.jupiter.api.Test
