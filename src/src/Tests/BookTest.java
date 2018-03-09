@@ -4,18 +4,21 @@ import src.main.Book;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 class BookTest {
 
-    Book newBook = new Book();
+    HashMap test = new HashMap();
+    Book newBook = new Book(test);
+
 
     @org.junit.jupiter.api.Test
     void add() {
-        newBook.add("Dmitry", "");
+        newBook.add("Dmitry", "1,1,1");
     }
-
-    @org.junit.jupiter.api.Test
+   /* @org.junit.jupiter.api.Test
     void delete() {
     }
 
@@ -25,11 +28,13 @@ class BookTest {
 
     @org.junit.jupiter.api.Test
     void getAddress() {
-    }
+    }*/
 
     @org.junit.jupiter.api.Test
     void getPeopleByStreet() {
-        assertEquals("Dmitry", newBook.getPeopleByStreet(""));
+        newBook.add("Dmitry", "1,1,1");
+
+        assertEquals("Dmitry", newBook.getPeopleByStreet("1"));
     }
 
     @org.junit.jupiter.api.Test

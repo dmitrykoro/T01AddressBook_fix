@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
-public class Book {
+    public class Book {
 
-    private HashMap data;
+        private HashMap data;
 
-    //public Book (HashMap data) {
-  //     this.data = data;
-    //}
+    public Book (HashMap data) {
+       this.data = data;
+    }
+
 
     public void add (String name, String address) {  //adding people + address
         data.put(name, address);
@@ -42,8 +43,10 @@ public class Book {
         List names = new ArrayList(data.keySet());
         List addresses = new ArrayList(data.values());
         String peopleByStreet = "";
-        for (int i = 0; i < names.size(); i++) {
-            if (addresses.get(i).toString().split(",")[0] == street) {
+       for (int i = 0; i < names.size(); i++) {
+           String temp = addresses.get(i).toString().split(",")[0];
+            //if (addresses.get(i).toString().split(",")[0] == street) {
+           if (addresses.get(i).toString().split(",")[0].equals(street)) {
                 peopleByStreet += names.get(i).toString();
             }
         }
@@ -55,7 +58,7 @@ public class Book {
         List addresses = new ArrayList(data.values());
         String peopleByHouse = "";
         for (int i = 0; i < names.size(); i++) {
-            if (addresses.get(i).toString().split(",")[1] == house) {
+            if (addresses.get(i).toString().split(",")[1].equals(house)) {
                 peopleByHouse += names.get(i).toString();
             }
         }
