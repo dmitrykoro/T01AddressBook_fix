@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
-    public class Book {
+public class Book {
 
-        private HashMap data;
+    private HashMap data;
 
     public Book (HashMap data) {
        this.data = data;
@@ -48,6 +48,7 @@ import java.util.*;
             //if (addresses.get(i).toString().split(",")[0] == street) {
            if (addresses.get(i).toString().split(",")[0].equals(street)) {
                 peopleByStreet += names.get(i).toString();
+                peopleByStreet += " ";
             }
         }
         return peopleByStreet;
@@ -60,6 +61,7 @@ import java.util.*;
         for (int i = 0; i < names.size(); i++) {
             if (addresses.get(i).toString().split(",")[1].equals(house)) {
                 peopleByHouse += names.get(i).toString();
+                peopleByHouse += " ";
             }
         }
         return peopleByHouse;
