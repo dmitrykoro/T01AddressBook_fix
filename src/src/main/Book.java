@@ -12,49 +12,45 @@ public class Book {
        this.data = data;
     }
 
-
-    public void add (String name, String address) {  //adding people + address
+    public void add (String name, String address) {                     //adding people + address
         data.put(name, address);
     }
 
-    public void delete (String name) {    //deleting people by name
+    public void delete (String name) {                                  //deleting people by name
         if (data.containsKey(name)) {
             data.remove(name);
         }
         else throw new IllegalArgumentException("There's no such name in the Book");
     }
 
-    public void changeAddress (String name, String address) {         //changing address by people's name
+    public void changeAddress (String name, String address) {           //changing address by people's name
         if (data.containsKey(name)) {
             data.replace(name, address);
         }
         else throw new IllegalArgumentException("Nothing to replace");
     }
 
-    public String getAddress (String name) {                 //getting address by people's name
+    public String getAddress (String name) {                            //getting address by people's name
         if (data.containsKey(name)) {
             return data.get(name).toString();
         }
         else throw new IllegalArgumentException("There's no people with this name");
     }
 
-    public String getPeopleByStreet (String street) {           //getting all people by street
-       // Book newBook = new Book()
+    public String getPeopleByStreet (String street) {                   //getting all people by street
         List names = new ArrayList(data.keySet());
         List addresses = new ArrayList(data.values());
         String peopleByStreet = "";
-       for (int i = 0; i < names.size(); i++) {
-           String temp = addresses.get(i).toString().split(",")[0];
-            //if (addresses.get(i).toString().split(",")[0] == street) {
-           if (addresses.get(i).toString().split(",")[0].equals(street)) {
-                peopleByStreet += names.get(i).toString();
-                peopleByStreet += " ";
-            }
+        for (int i = 0; i < names.size(); i++) {
+            if (addresses.get(i).toString().split(",")[0].equals(street)) {
+                 peopleByStreet += names.get(i).toString();
+                 peopleByStreet += " ";
+             }
         }
         return peopleByStreet;
     }
 
-    public String getPeopleByHouse (String house) {         //getting all people by house
+    public String getPeopleByHouse (String house) {                      //getting all people by house
         List names = new ArrayList(data.keySet());
         List addresses = new ArrayList(data.values());
         String peopleByHouse = "";
