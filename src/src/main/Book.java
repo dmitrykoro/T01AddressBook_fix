@@ -1,63 +1,74 @@
 package src.main;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Book {
 
-    private HashMap data;
-
-    public Book (HashMap data) {
-       this.data = data;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(data, book.data);
     }
 
-    public void add (String name, String address) {                     //adding people + address
+    @Override
+    public int hashCode() {
+        return Objects.hash(data);
+    }
+
+    private Map<String, String> data;
+
+    public Book(Map<String, String> data) {
+        this.data = data;
+    }
+
+    public Book add(String name, String address) {                                 //adding people + address
         data.put(name, address);
+        return this;
     }
 
-    public void delete (String name) {                                  //deleting people by name
+    public Book delete(String name) {                                              //deleting people by name
         if (data.containsKey(name)) {
             data.remove(name);
         }
         else throw new IllegalArgumentException("There's no such name in the Book");
+        return this;
     }
 
-    public void changeAddress (String name, String address) {           //changing address by people's name
+    public Book changeAddress(String name, String address) {                       //changing address by people's name
         if (data.containsKey(name)) {
             data.replace(name, address);
         }
         else throw new IllegalArgumentException("Nothing to replace");
+        return this;
     }
 
-    public String getAddress (String name) {                            //getting address by people's name
+    public String getAddress(String name) {                                        //getting address by people's name
         if (data.containsKey(name)) {
-            return data.get(name).toString();
+            return data.get(name);
         }
         else throw new IllegalArgumentException("There's no people with this name");
     }
 
-    public String getPeopleByStreet (String street) {                   //getting all people by street
-        List names = new ArrayList(data.keySet());
-        List addresses = new ArrayList(data.values());
-        String peopleByStreet = "";
-        for (int i = 0; i < names.size(); i++) {
-            if (addresses.get(i).toString().split(",")[0].equals(street)) {
-                 peopleByStreet += names.get(i).toString();
-                 peopleByStreet += " ";
-             }
+    public List<String> getPeopleByStreet(String street) {                             //getting all people by street
+        ArrayList<String> peopleByStreet = new ArrayList<String>();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            if (entry.getValue().split(",")[0].equals(street)) {
+                peopleByStreet.add(entry.getKey());
+            }
         }
         return peopleByStreet;
     }
 
-    public String getPeopleByHouse (String house) {                      //getting all people by house
-        List names = new ArrayList(data.keySet());
-        List addresses = new ArrayList(data.values());
-        String peopleByHouse = "";
-        for (int i = 0; i < names.size(); i++) {
-            if (addresses.get(i).toString().split(",")[1].equals(house)) {
-                peopleByHouse += names.get(i).toString();
-                peopleByHouse += " ";
+    public List<String> getPeopleByHouse(String street) {                             //getting all people by street
+        ArrayList<String> peopleByHouse = new ArrayList<String>();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            if (entry.getValue().split(",")[1].equals(street)) {
+                peopleByHouse.add(entry.getKey());
             }
         }
         return peopleByHouse;

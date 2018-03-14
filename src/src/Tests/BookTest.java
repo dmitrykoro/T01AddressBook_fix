@@ -2,6 +2,8 @@ package src.Tests;
 
 import src.main.Book;
 import java.util.HashMap;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -11,8 +13,9 @@ class BookTest {
 
     @org.junit.jupiter.api.Test
     void add() {
+        List<String> expected = List.of("Dmitry");
         newBook.add("Dmitry", "1,1,1");
-        assertEquals("Dmitry ", newBook.getPeopleByHouse("1"));
+        assertEquals(expected, newBook.getPeopleByHouse("1"));
     }
 
     @org.junit.jupiter.api.Test
@@ -44,24 +47,25 @@ class BookTest {
 
     @org.junit.jupiter.api.Test
     void getPeopleByStreet() {
+        List<String> expected = List.of("Ivan Petrov", "Fedor Korolev", "Aalexandr Petrov");
         newBook.add("Dmitry Korobeynikov", "Ulitsa,78,242");
         newBook.add("Anton Ivanov", "Slavy prospect,1,55");
         newBook.add("Ivan Petrov", "Nevsky,74,89");
         newBook.add("Fedor Korolev", "Nevsky,45,99");
         newBook.add("Aalexandr Petrov", "Nevsky,74,55");
         newBook.add("Michail", "Ulitsa1,1,1");
-        assertEquals("Ivan Petrov Fedor Korolev Aalexandr Petrov ",
-                newBook.getPeopleByStreet("Nevsky"));
+        assertEquals(expected, newBook.getPeopleByStreet("Nevsky"));
     }
 
     @org.junit.jupiter.api.Test
     void getPeopleByHouse() {
+        List<String> expected = List.of("Ivan Petrov", "Aalexandr Petrov");
         newBook.add("Dmitry Korobeynikov", "Ulitsa,78,242");
         newBook.add("Anton Ivanov", "Slavy prospect,1,55");
         newBook.add("Ivan Petrov", "Nevsky,74,89");
         newBook.add("Fedor Korolev", "Nevsky,45,99");
         newBook.add("Aalexandr Petrov", "Nevsky,74,55");
         newBook.add("Michail", "Ulitsa1,1,1");
-        assertEquals("Ivan Petrov Aalexandr Petrov ", newBook.getPeopleByHouse("74"));
+        assertEquals(expected, newBook.getPeopleByHouse("74"));
     }
 }
