@@ -1,71 +1,117 @@
 package src.Tests;
 
+import org.junit.jupiter.api.Test;
 import src.main.Book;
-import java.util.HashMap;
-import java.util.List;
+import src.main.Info;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
-    HashMap test = new HashMap();
-    Book newBook = new Book(test);
 
-    @org.junit.jupiter.api.Test
+    public ArrayList<Info> test = new ArrayList<Info>();
+    public Book bookTest = new Book(test);
+
+
+    @Test
     void add() {
-        List<String> expected = List.of("Dmitry");
-        newBook.add("Dmitry", "1,1,1");
-        assertEquals(expected, newBook.getPeopleByHouse("1"));
+
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+
+        ArrayList<String> expected = new ArrayList<String>();
+        expected.add("Dmitry");
+        expected.add("Ivan");
+        expected.add("Fedor");
+
+        assertEquals(expected, bookTest.getPeopleByStreet("Nevsky"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void delete() {
-        newBook.add("Anton Ivanov", "Slavy prospect,1,55");
-        newBook.delete("Anton Ivanov");
-        assertThrows(IllegalArgumentException.class, () -> newBook.getAddress("Anton Ivanov"));
+
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+
+        bookTest.delete("Ivan");
+
+        assertThrows(IllegalArgumentException.class, () -> bookTest.getAddress("Ivan"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void changeAddress() {
-        newBook.add("Anton Ivanov", "Slavy prospect,1,55");
-        newBook.add("Ivan Petrov", "Nevsky,74,89");
-        newBook.changeAddress("Ivan Petrov", "1,1,1");
-        assertEquals("1,1,1", newBook.getAddress("Ivan Petrov"));
+
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+
+        bookTest.changeAddress("Dmitry", "Slavy prospect", "50", "189");
+
+        ArrayList<Info> expected = new ArrayList<Info>();
+        expected.add(new Info("Dmitry", "Slavy prospect", "50", "189"));
+        expected.add(new Info("Ivan", "Nevsky", "35", "654"));
+        expected.add(new Info("Fedor", "Nevsky", "2", "10"));
+
+        assertEquals(expected, bookTest.data);
+        assertThrows(IllegalArgumentException.class, () -> bookTest.changeAddress("Petor", "", "", ""));
+
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getAddress() {
-        newBook.add("Dmitry Korobeynikov", "Ulitsa,78,242");
-        newBook.add("Anton Ivanov", "Slavy prospect,1,55");
-        newBook.add("Ivan Petrov", "Nevsky,74,89");
-        newBook.add("Fedor Korolev", "Nevsky,45,99");
-        newBook.add("Aalexandr Petrov", "Nevsky,74,55");
-        newBook.add("Michail", "Ulitsa1,1,1");
-        assertEquals("Ulitsa,78,242", newBook.getAddress("Dmitry Korobeynikov"));
 
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+
+        Info expected = new Info("Fedor", "Nevsky", "2", "10");
+
+        assertEquals(expected, bookTest.getAddress("Fedor"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getPeopleByStreet() {
-        List<String> expected = List.of("Ivan Petrov", "Fedor Korolev", "Aalexandr Petrov");
-        newBook.add("Dmitry Korobeynikov", "Ulitsa,78,242");
-        newBook.add("Anton Ivanov", "Slavy prospect,1,55");
-        newBook.add("Ivan Petrov", "Nevsky,74,89");
-        newBook.add("Fedor Korolev", "Nevsky,45,99");
-        newBook.add("Aalexandr Petrov", "Nevsky,74,55");
-        newBook.add("Michail", "Ulitsa1,1,1");
-        assertEquals(expected, newBook.getPeopleByStreet("Nevsky"));
+
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+        bookTest.addPeople("Anton Ivanov", "Slavy prospect","1", "55");
+        bookTest.addPeople("Ivan Petrov", "Nevsky","74","89");
+        bookTest.addPeople("Fedor Korolev", "Nevsky","45","99");
+        bookTest.addPeople("Aalexandr Petrov", "Nevsky","74","55");
+
+        ArrayList<String> expected = new ArrayList<String>();
+
+        expected.add("Dmitry");
+        expected.add("Ivan");
+        expected.add("Fedor");
+        expected.add("Ivan Petrov");
+        expected.add("Fedor Korolev");
+        expected.add("Aalexandr Petrov");
+
+        assertEquals(expected, bookTest.getPeopleByStreet("Nevsky"));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getPeopleByHouse() {
-        List<String> expected = List.of("Ivan Petrov", "Aalexandr Petrov");
-        newBook.add("Dmitry Korobeynikov", "Ulitsa,78,242");
-        newBook.add("Anton Ivanov", "Slavy prospect,1,55");
-        newBook.add("Ivan Petrov", "Nevsky,74,89");
-        newBook.add("Fedor Korolev", "Nevsky,45,99");
-        newBook.add("Aalexandr Petrov", "Nevsky,74,55");
-        newBook.add("Michail", "Ulitsa1,1,1");
-        assertEquals(expected, newBook.getPeopleByHouse("74"));
+        bookTest.addPeople("Dmitry", "Nevsky", "44", "57");
+        bookTest.addPeople("Ivan", "Nevsky", "35", "654");
+        bookTest.addPeople("Fedor", "Nevsky", "2", "10");
+        bookTest.addPeople("Anton Ivanov", "Slavy prospect","1", "55");
+        bookTest.addPeople("Ivan Petrov", "Nevsky","74","89");
+        bookTest.addPeople("Fedor Korolev", "Nevsky","45","99");
+        bookTest.addPeople("Aalexandr Petrov", "Nevsky","74","55");
+
+        ArrayList<String> expected = new ArrayList<String>();
+
+        expected.add("Ivan Petrov");
+        expected.add("Aalexandr Petrov");
+
+        assertEquals(expected, bookTest.getPeopleByHouse("74"));
     }
 }
